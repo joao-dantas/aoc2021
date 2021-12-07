@@ -23,6 +23,7 @@ def process(list_of_numbers, evaluate_most_common, idx):
     else:
         return process(zeros_list, evaluate_most_common, idx + 1)
 
+
 if __name__ == '__main__':
     with open('input.txt') as f:
         initial_ones_list = []
