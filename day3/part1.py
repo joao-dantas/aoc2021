@@ -1,39 +1,29 @@
-class ControlLists:
-  def __init__(self, zeros_list, ones_list):
-      pass
-  zeros_list =zeros_list
-  ones_list = ones_list
-  most_common = -1
-
-  def process(self, lines, idx):
-      for line in lines:
-          if line[idx] == "0":
-              self.zeros_list.append(line)
-          else:
-              self.ones_list.append(line)
-      if len(zeros_list) > len(ones_list):
-          self.most_common = 0
-      else:
-          self.most_common = 1
-      ControlLists()
-
 if __name__ == '__main__':
-    with open('example_input.txt') as f:
-        ones_list = []
-        zeros_list = []
-        lines = f.readlines()
-
-        for line in lines:
+    with open('input.txt') as f:
+        control_array = []
+        while True:
+            line = f.readline()
+            if not line:
+                break
             line = line.strip()
-            if line[0] == "0":
-                zeros_list.append(line)
-            else:
-                ones_list.append(line)
+            for idx in range(len(line)):
+                if len(control_array) <= idx:
+                    control_array.append("0")
+                if line[idx] == '0':
+                    control_array[idx] = int(control_array[idx]) - 1
+                elif line[idx] == '1':
+                    control_array[idx] = int(control_array[idx]) + 1
+            gamma_string = "0b"
+            epsilon_string = "0b"
+            for idx in range(len(control_array)):
+                if int(control_array[idx]) > 0:
+                    gamma_string += "1"
+                    epsilon_string += "0"
+                else:
+                    gamma_string += "0"
+                    epsilon_string += "1"
+            gama = int(gamma_string, 2)
+            epsilon = int(epsilon_string, 2)
+        print(gama * epsilon)
 
-        for line in zeros_list:
-
-
-        print ones_list
-        print zeros_list
         f.close()
-
