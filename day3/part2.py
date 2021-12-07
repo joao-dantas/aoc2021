@@ -8,6 +8,7 @@ def process(list_of_numbers, evaluate_most_common, idx):
             zeros_list.append(item)
         else:
             ones_list.append(item)
+
     if len(ones_list) > len(zeros_list):
         if evaluate_most_common:
             return process(ones_list, evaluate_most_common, idx + 1)
@@ -26,24 +27,8 @@ def process(list_of_numbers, evaluate_most_common, idx):
 
 if __name__ == '__main__':
     with open('input.txt') as f:
-        initial_ones_list = []
-        initial_zeros_list = []
-        initial_idx = 0
-
-        while True:
-            line = f.readline()
-            if not line:
-                break
-            line = line.strip()
-            if line[initial_idx] == "0":
-                initial_zeros_list.append(line)
-            else:
-                initial_ones_list.append(line)
+        lines = f.readlines()
         f.close()
-        if len(initial_ones_list) >= len(initial_zeros_list):
-            oxygen_generator_rating = process(initial_ones_list, True, initial_idx + 1)
-            co2_scrubber_rating = process(initial_zeros_list, False, initial_idx + 1)
-        else:
-            oxygen_generator_rating = process(initial_zeros_list, True, initial_idx + 1)
-            co2_scrubber_rating = process(initial_ones_list, False, initial_idx + 1)
-        print(oxygen_generator_rating * co2_scrubber_rating)
+    oxygen_generator_rating = process(lines, True, 0)
+    co2_scrubber_rating = process(lines, False, 0)
+    print(oxygen_generator_rating * co2_scrubber_rating)
