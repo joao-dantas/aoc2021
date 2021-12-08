@@ -23,6 +23,7 @@ def process_boards(bingo_boards, number_selected):
             for idx, num in enumerate(line):
                 if num == number_selected:
                     line[idx] = -1
+                    # The check winner could be done while we're marking the board to avoid go over the board again
                     if check_winner(board):
                         total_unmarked = get_sum_unmarked(board)
                         print number_selected
