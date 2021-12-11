@@ -22,8 +22,6 @@ def check_participant(participant_checked):
                         participant_checked.already_won = True
                         participant_checked.rounds_to_win = current_round
                         participant_checked.win_num = sel_num
-            else:
-                continue
     return participant_checked
 
 
