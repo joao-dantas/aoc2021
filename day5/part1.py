@@ -14,9 +14,6 @@ class LineVent:
         self.x2 = int(dot_two[0])
         self.y2 = int(dot_two[1])
 
-    def __str__(self):
-        return "x1: " + str(self.x1) + ", x2: " + str(self.x2) + ", y1: " + str(self.y1) + ", y2: " + str(self.y2)
-
 
 class HydrothermalVent:
     all_points = {}
@@ -28,47 +25,26 @@ class HydrothermalVent:
     def process_vent(self, live_vent):
         if not (line_vent.x1 == line_vent.x2 or line_vent.y1 == line_vent.y2):
             return
-        if live_vent.x2 > live_vent.x1:
-            for i in range(live_vent.x1, live_vent.x2 + 1):
-                if i not in self.all_points:
-                    self.all_points[i] = {live_vent.y1: 1}
-                elif live_vent.y1 not in self.all_points[i]:
-                    self.all_points[i][live_vent.y1] = 1
-                else:
-                    self.all_points[i][live_vent.y1] += 1
-                    if self.all_points[i][live_vent.y1] == 2:
-                        self.num_overlaps += 1
-        elif live_vent.x1 > live_vent.x2:
-            for i in range(live_vent.x2, live_vent.x1 + 1):
-                if i not in self.all_points:
-                    self.all_points[i] = {live_vent.y1: 1}
-                elif live_vent.y1 not in self.all_points[i]:
-                    self.all_points[i][live_vent.y1] = 1
-                else:
-                    self.all_points[i][live_vent.y1] += 1
-                    if self.all_points[i][live_vent.y1] == 2:
-                        self.num_overlaps += 1
-
-        elif live_vent.y2 > live_vent.y1:
-            for i in range(live_vent.y1, live_vent.y2 + 1):
-                if live_vent.x1 not in self.all_points:
-                    self.all_points[live_vent.x1] = {live_vent.y1: 1}
-                elif i not in self.all_points[live_vent.x1]:
-                    self.all_points[live_vent.x1][i] = 1
-                else:
-                    self.all_points[live_vent.x1][i] += 1
-                    if self.all_points[live_vent.x1][i] == 2:
-                        self.num_overlaps += 1
+        biggest_x = live_vent.x1 if live_vent.x1 > live_vent.x2 else live_vent.x2
+        lowest_x = live_vent.x1 if live_vent.x1 < live_vent.x2 else live_vent.x2
+        biggest_y = live_vent.y1 if live_vent.y1 > live_vent.y2 else live_vent.y2
+        lowest_y = live_vent.y1 if live_vent.y1 < live_vent.y2 else live_vent.y2
+        if biggest_x != lowest_x:
+            for x in range(lowest_x, biggest_x + 1):
+                self.add_point(x, live_vent.y1)
         else:
-            for i in range(live_vent.y2, live_vent.y1 + 1):
-                if live_vent.x1 not in self.all_points:
-                    self.all_points[live_vent.x1] = {live_vent.y1: 0}
-                elif i not in self.all_points[live_vent.x1]:
-                    self.all_points[live_vent.x1][i] = 1
-                else:
-                    self.all_points[live_vent.x1][i] += 1
-                    if self.all_points[live_vent.x1][i] == 2:
-                        self.num_overlaps += 1
+            for y in range(lowest_y, biggest_y + 1):
+                self.add_point(live_vent.x1, y)
+
+    def add_point(self, x, y):
+        if x not in self.all_points:
+            self.all_points[x] = {y: 1}
+        elif y not in self.all_points[x]:
+            self.all_points[x][y] = 1
+        else:
+            self.all_points[x][y] += 1
+            if self.all_points[x][y] == 2:
+                self.num_overlaps += 1
 
 
 if __name__ == '__main__':
@@ -81,5 +57,4 @@ if __name__ == '__main__':
             line_vent = LineVent(file_line)
             thermal_vent.process_vent(line_vent)
         f.close()
-        print thermal_vent.all_points
         print thermal_vent.num_overlaps
