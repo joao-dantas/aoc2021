@@ -14,7 +14,6 @@ class LineVent:
         self.x2 = int(dot_two[0])
         self.y2 = int(dot_two[1])
 
-
 class HydrothermalVent:
     all_points = {}
     num_overlaps = 0
@@ -58,8 +57,6 @@ class HydrothermalVent:
         elif biggest_y != lowest_y and biggest_x == lowest_x:
             for y in range(lowest_y, biggest_y + 1):
                 self.add_point(line_vent.x1, y)
-        else:
-            print line_vent
 
     def add_point(self, x, y):
         if x not in self.all_points:
