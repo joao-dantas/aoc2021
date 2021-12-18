@@ -57,4 +57,4 @@ if __name__ == '__main__':
             line_vent = LineVent(file_line)
             thermal_vent.process_vent(line_vent)
         f.close()
-        print thermal_vent.num_overlaps
+        print(thermal_vent.num_overlaps)
