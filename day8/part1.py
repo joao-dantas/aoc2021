@@ -12,16 +12,12 @@
 #
 def check_signal(s):
     if len(s) == 7:
-        print(s + " is an eight")
         return 8
     elif len(s) == 2:
-        print(s + " is a one")
         return 1
     elif len(s) == 4:
-        print(s + " is a four")
         return 4
     elif len(s) == 3:
-        print(s + " is a seven")
         return 7
     else:
         return 0
